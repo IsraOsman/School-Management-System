@@ -1,26 +1,29 @@
 package jpa.entity.models;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Student {
 	@Id
+	@Column(name="email", nullable = false, length = 50)
 	private String sEmail;
+	@Column(name="name", nullable = false, length = 50)
 	private String sName;
+	@Column(name="password", nullable = false, length = 50)
 	private String sPass; 
-	private List sCourses;
+	
+	@OneToMany(targetEntity = Course.class, cascade = CascadeType.ALL)
+	private List sCourses = new ArrayList<Course>();
 	
 	
-	public Student() {
-		sEmail = null;
-		sName = null;
-		sPass = null;
-		sCourses = null; 
-		
-		
-	}
+	public Student() {}
 	
 	
 	public Student(String sEmail, String sName, String sPass, List sCourses) {
@@ -54,5 +57,9 @@ public class Student {
 		this.sCourses = sCourses;
 	} 
 
+	
+	public void setCourse(Course course) {
+		this.sCourses.add(course);
+	}
 	
 }
